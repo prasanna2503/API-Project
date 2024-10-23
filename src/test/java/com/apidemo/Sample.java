@@ -1,53 +1,55 @@
 package com.apidemo;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class Sample {
-	public static void main(String[] args) throws IOException, ParseException {
-		//Create the Object for JSONParse
-		JSONParser  jsonParser = new JSONParser();
-		//Pass the json file to fetch values
-		Object parse = jsonParser.parse(new FileReader(System.getProperty("user.dir")  + "\\src\\test\\resources\\Demo.json"));
+	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
+		JSONParser jsonParser = new JSONParser();
+		Object parse = jsonParser.parse(new FileReader(System.getProperty("user.dir") + "\\src\\test\\resources\\Sample.json"));
 		
 		JSONObject jsonObject = (JSONObject) parse;
-		Object object = jsonObject.get("data");
+		Object page = jsonObject.get("page");
+		System.out.println(page);
 		
-		JSONObject jsonObject1 = (JSONObject) object;
-		Object id = jsonObject1.get("id");
-		System.out.println("Id :"+ id);
+		Object perPage = jsonObject.get("per_page");
+		System.out.println(perPage);
 		
-		Object object3 = jsonObject1.get("flightName");
-		System.out.println("flightName :"+ object3);
+		Object total = jsonObject.get("total");
+		System.out.println(total);
 		
-		Object country = jsonObject1.get("Country");
-		System.out.println("Country :"+ country);
+		Object totalPages = jsonObject.get("total_pages");
+		System.out.println(totalPages);
 		
-		Object destinations = jsonObject1.get("Destinations");
-		System.out.println("Destinations :"+ destinations);
+		Object data = jsonObject.get("data");
+		System.out.println(data);
 		
-		Object url = jsonObject1.get("URL");
-		System.out.println("URL"+ url);
-		
-		Object createdDate = jsonObject1.get("Created_Date");
-		System.out.println("Created_Date :"+ createdDate);
-		
-		Object updatedDate = jsonObject1.get("Updated_Date");
-		System.out.println("Updated_Date :"+ updatedDate);
-		
-		
-		
-		Object object4 = jsonObject.get("support");
-		JSONObject jsonObject2 = (JSONObject) object4;
-		Object url1 = jsonObject2.get("url");
-		System.out.println("url:" + url1);
+		JSONArray array = (JSONArray) data;
+		for (int i = 0; i < array.size(); i++) {
+			Object object = array.get(i);
+			JSONObject jsonObject2 = (JSONObject) object;
+			Object id = jsonObject2.get("id");
+			System.out.println(id);
+			Object flight = jsonObject2.get("flightName");
+			System.out.println(flight);
+			Object country = jsonObject2.get("Country");
+			System.out.println(country);
+			Object desig = jsonObject2.get("Destinations");
+			System.out.println(desig);
+			Object url = jsonObject2.get("URL");
+			System.out.println(url);
+		}
+		Object support = jsonObject.get("support");
+		JSONObject jsonObject2 = (JSONObject) support;
+		Object url2 = jsonObject2.get("url");
+		System.out.println(url2);
 		Object text = jsonObject2.get("text");
-		System.out.println("text:" + text);
+		System.out.println(text);
 	}
 }
